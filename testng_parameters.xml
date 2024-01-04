@@ -9,21 +9,21 @@
     <test name="Pass Parameter Test">
         <parameter name="TestResult" value="Pass" />
         <classes>
-            <class name="tests.ParameterizedTest" />
+            <class name="demo_tests.ParameterizedTest" />
         </classes>
     </test>
 
     <test name="Fail Parameter Test">
         <parameter name="TestResult" value="Fail" />
         <classes>
-            <class name="tests.ParameterizedTest" />
+            <class name="demo_tests.ParameterizedTest" />
         </classes>
     </test>
 
     <test name="Skip Parameter Test">
         <parameter name="TestResult" value="Skip" />
         <classes>
-            <class name="tests.ParameterizedTest" />
+            <class name="demo_tests.ParameterizedTest" />
         </classes>
     </test>
 </suite>

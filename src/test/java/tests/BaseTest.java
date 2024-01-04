@@ -1,22 +1,27 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
-import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import pages.BasePage;
+import pages.HomePage;
 
 import java.io.File;
 import java.io.IOException;
 
-public class TakeFailedScreenshotTest {
+public class BaseTest {
 
-    private WebDriver driver;
+    WebDriver driver;
+    protected BasePage basePage;
+    protected HomePage homePage;
     private final String BASE_URL = "https://www.lambdatest.com/selenium-playground/";
 
     @BeforeClass
@@ -27,27 +32,16 @@ public class TakeFailedScreenshotTest {
     }
 
     @BeforeMethod
-    public void openBaseUrl() {
+    public void loadApplication() {
         driver.get(BASE_URL);
-    }
-
-    @Test
-    public void testSimpleFormDemo() {
-        driver.findElement(By.linkText("Simple Form Demo")).click();
-        driver.findElement(By.xpath("//input[@id='user-message']"))
-                .sendKeys("Test Automation is Awesome!!!");
-        driver.findElement(By.id("showInput")).click();
-
-        String actualMessage = driver.findElement(By.id("message")).getText();
-
-        Assert.assertEquals(actualMessage, "Test Automation is Awesome!!!");
+        basePage = new BasePage();
+        basePage.setDriver(driver);
+        homePage = new HomePage();
     }
 
     @AfterMethod
     public void takeScreenshotForFailures(ITestResult testResult) {
-        // Take screenshot if test fails
         if (ITestResult.FAILURE == testResult.getStatus()) {
-
             TakesScreenshot screenshot = (TakesScreenshot) driver;
             File source = screenshot.getScreenshotAs(OutputType.FILE);
             File destination = new File(System.getProperty("user.dir")
